@@ -19,16 +19,39 @@ for(let i = 0; i < boxes.length; i++){
             if(player1 == player2){
                 el = x;
                 player1++;
+                let cloneEl = el.cloneNode(true); //Para não sumir os elementos x e o
+                this.appendChild(cloneEl);
+
+                if(secondPlayer == "ia-player"){
+                    computerPlay();
+                    player2++;
+                }
             } else{
                 el = o;
                 player2++;
+                let cloneEl = el.cloneNode(true); //Para não sumir os elementos x e o
+                this.appendChild(cloneEl);
             }
-            let cloneEl = el.cloneNode(true); //Para não sumir os elementos x e o
-            this.appendChild(cloneEl);
-
+        
             //Verifica se alguém ganhou
             checkWinCondition();
         }
+    });
+}
+
+// Evento para saber se é 2 players ou IA
+for(let i = 0; i < buttons.length; i++){
+    buttons[i].addEventListener("click", function() {
+        secondPlayer = this.getAttribute("id");
+
+        for(j = 0; j < buttons.length; j++) {
+            buttons[j].style.display = "none";
+        }
+
+        setTimeout(function() {
+            let container = document.querySelector("#container");
+            container.classList.remove("hide");
+        }, 500);
     });
 }
 
@@ -159,10 +182,10 @@ function declareWinner(winner){
     let scoreBoardO = document.querySelector("#scoreboard-2");
     let msg = "";
 
-    if(winner == x) {
+    if(winner == "x") {
         scoreBoardX.textContent = parseInt(scoreBoardX.textContent) + 1;
         msg = "O jogador 1 venceu!";
-    } else if(winner == o) {
+    } else if(winner == "o") {
         scoreBoardO.textContent = parseInt(scoreBoardO.textContent) + 1;
         msg = "O jogador 2 venceu!";
     } else {
@@ -186,6 +209,31 @@ function declareWinner(winner){
     let boxesToRemove = document.querySelectorAll(".box div");
     
     for(let i = 0; i < boxesToRemove.length; i++) {
-        boxesToRemove[i].parentNote.removeChild(boxesToRemove[i]);
+        boxesToRemove[i].parentNode.removeChild(boxesToRemove[i]);
+    }
+}
+
+// Jogada da IA
+
+function computerPlay() {
+    let cloneO = o.cloneNode(true);
+    counter = 0;
+    filled = 0;
+
+
+    for(let i = 0; i < boxes.length; i++) {
+        let randomNumber = Math.floor(Math.random() * 5);
+        if(boxes[i].childNodes[0] == undefined) {
+            if(randomNumber <= 1){
+                boxes[i].appendChild(cloneO);
+                counter++;
+                break;
+            } 
+        } else {
+            filled++;
+        }
+    }
+    if (counter == 0 && filled < 9) {
+        computerPlay();
     }
 }
