@@ -1,0 +1,4 @@
+main  background-image colocar a imagem de fundo do jogo da memória
+
+back background-image: colocar a imagem de fundo do jogo da memória
+

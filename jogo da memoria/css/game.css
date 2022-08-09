@@ -1,12 +1,12 @@
-main {
+.main {
     display: flex;
     flex-direction: column;
+    background-image: url("../images/plano_de_fundo.jpg");
     width: 100%;
-    background-image: url(../images/rick/plano_de_fundo.jpg);
     background-size: cover;
     min-height: 100vh;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     padding: 20px 20px 50px;
 }
 
@@ -16,18 +16,33 @@ header  {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 800px;
-    padding: 30px;
+    max-width: 1200px;
+    padding: 10px 15px;
     margin: 0 0 30px;
     border-radius: 5px;
 }
 
-.grid{
+header span,button{
+    padding: 20px 10px;
+    border-radius: 7px;
+
+}
+
+.type{
     display:grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
+    margin: 150px auto;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 15px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -39,6 +54,22 @@ header  {
     transition: all 400ms ease;
     transform-style:preserve-3d;
     background-color: #ccc;
+    cursor: pointer;
+}
+
+.rick{
+    background-image: url(../images/rick/back.png);
+    backface-visibility: hidden;
+}
+
+.gravity_falls{
+    background-image: url(../images/gravity_falls/back.png);
+    backface-visibility: hidden;
+}
+
+.simpsons{
+    background-image: url(../images/simpsons/back.png);
+    backface-visibility: hidden;
 }
 
 .face{
@@ -57,7 +88,6 @@ header  {
 }
 
 .back{
-    background-image: url(../images/rick/back.png);
     backface-visibility: hidden; /*Esconder a face de trás desse elemento*/
 }
 
@@ -68,4 +98,18 @@ header  {
 .disabled-card{
     filter: saturate(0);
     opacity: 0.5;
+}
+
+.restart{
+    background-color: #39813a;
+    border: 2px solid #39813a;
+}
+
+.hide{
+    display: none !important;
+}
+
+.restart:hover{
+    background-color: #fff;
+    cursor: pointer
 }

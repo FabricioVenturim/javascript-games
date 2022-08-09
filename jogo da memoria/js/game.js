@@ -1,15 +1,24 @@
 const grid = document.querySelector(".grid");
 const spanPlayer = document.querySelector(".player");
-const numbersCard = ["1", "2", "3", "4", "5","6", "7", "8", "9", "10",];
+const numbersCard = ["1", "2", "3", "4", "5","6", "7", "8", "9", "10","11","12"];
 const timer = document.querySelector(".timer");
+const button = document.querySelector(".restart");
+const cardRick = document.querySelector(".rick");
+const cardGravityFalls = document.querySelector(".gravity_falls");
+const cardSimpsons = document.querySelector(".simpsons");
+const type = document.querySelector(".type");
+
 let firstCard = "";
 let secondCard = "";
+
+
 
 const checkEndGame = () => {
     const disabledCard = document.querySelectorAll(".disabled-card");
 
-    if(disabledCard.length == 20) {
+    if(disabledCard.length == 24) {
         clearInterval(this.loop);
+        button.classList.remove("hide")
         alert(`Parabéns, ${spanPlayer.innerHTML}! Seu tempo foi: ${timer.innerHTML} segundos.`);
     }
 }
@@ -56,7 +65,7 @@ const revealCard = ({target}) => {
 }
 
 //Função para criar as cartas do jogo
-const createCard = (number) => {
+const createCard = (number, typeStyle) => {
 
     const card = document.createElement("div");
     const front = document.createElement("div");
@@ -66,7 +75,8 @@ const createCard = (number) => {
     front.className = "face front";
     back.className = "face back";
 
-    front.style.backgroundImage = `url('../images/rick/${number}.png')`;
+    back.style.backgroundImage = `url("../images/${typeStyle}/back.png")`
+    front.style.backgroundImage = `url('../images/${typeStyle}/${number}.png')`;
 
     card.appendChild(front);
     card.appendChild(back);
@@ -76,13 +86,13 @@ const createCard = (number) => {
     return card;
 }
 
-const loadGame = () => {
+const loadGame = (typeStyle) => {
     // Espalhar as cartas
     const duplicatenumbersCard = [ ...numbersCard, ...numbersCard] 
     const shuffledArray = duplicatenumbersCard.sort(() => Math.random() - 0.5); 
     
     shuffledArray.forEach((number) => {
-        const card = createCard(number);
+        const card = createCard(number, typeStyle);
         grid.appendChild(card);
     });
 }
@@ -94,9 +104,52 @@ const startTimer = () => {
     }, 1000)
 }
 
-window.onload = () => { //Executa quando a página carrega
-    spanPlayer.innerHTML = localStorage.getItem("player");
-    startTimer();
-    loadGame();
+const restart = () => {
+    timer.innerHTML = 0;
+    firstCard = "";
+    secondCard = "";
+    const child = grid.children;
+    let tamanho = child.length;
+    for(let i=0; i<tamanho;i++){
+        grid.removeChild(child[0]);
+    }
+    button.classList.add("hide");
+    type.classList.remove("hide");
+    window.onload();
 }
 
+const starts = (typeStyle) => {
+    const main = document.querySelector(".main");
+
+    main.style.backgroundImage = `url("../images/${typeStyle}/plano_de_fundo.jpg")`;
+    startTimer();
+    loadGame(typeStyle);
+    button.addEventListener("click", restart);
+
+}
+
+window.onload = () => { //Executa quando a página carrega
+    console.log("reinicio")
+    spanPlayer.innerHTML = localStorage.getItem("player");
+    cardRick.addEventListener("click", styleRick);
+    cardGravityFalls.addEventListener("click", styleGravityFalls);
+    cardSimpsons.addEventListener("click", styleSimpsons);
+}
+
+const styleRick = () => {
+    let typeStyle = "rick";
+    type.classList.add("hide");
+    starts(typeStyle);
+}
+
+const styleGravityFalls = () => {
+    let typeStyle = "gravity_falls"
+    type.classList.add("hide");
+    starts(typeStyle);
+}
+
+const styleSimpsons = () => {
+    let typeStyle = "simpsons"
+    type.classList.add("hide");
+    starts(typeStyle);
+}
