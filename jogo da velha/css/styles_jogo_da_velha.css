@@ -9,10 +9,13 @@ h1 {
 
 /* Botão */
 
+
+
 #buttons-container button {
     border: none;
     padding: 10px 15px;
     margin: 0px 10px;
+    cursor:pointer
 }
 
 /* Jogo */
